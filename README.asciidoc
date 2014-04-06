@@ -1,13 +1,9 @@
 VimGym
 ------
 
-NOTE: This is currently WishWare; coming soon.
-
-____
-
-// TIP: If you like VimGym and want to share the W00t!, I'm grateful for
-// https://www.gittip.com/bairuidahu/[tips] or
-// http://of-vim-and-vigor.blogspot.com/[beverages].
+TIP: If you like VimGym and want to share the W00t!, I'm grateful for
+https://www.gittip.com/bairuidahu/[tips] or
+http://of-vim-and-vigor.blogspot.com/[beverages].
 
 The VimGym is your very own, private Vim workout space where you can work on
 your Vim Game, hone your skills and keep your edge. It is based on the
@@ -32,6 +28,15 @@ wildly, comparing times is mostly meaningless.
 Training in the VimGym
 ~~~~~~~~~~~~~~~~~~~~~~
 
-`:VimGym` will spawn a new tab and set you off on a challenge. This may be a
-new challenge or a repeat, as determined by VimGym.
-____
+* `:VimGym` -- will spawn a new tab and set you off on a challenge. This may be a
+   new challenge or a repeat, as determined by VimGym.
+
+* `:VimGym do [<task-name>]`
+* `:VimGym add start|end <task-name>`
+* `:VimGym delete <task-name>`
+* `:VimGym stats [<task-name>]`
+
+From within a VimGym pane, use:
+
+* `:VimGymStart`
+* `:VimGymEnd`
