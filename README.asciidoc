@@ -1,6 +1,8 @@
 VimGym
 ------
 
+NOTE: This is currently WishWare; coming soon.
+
 ____
 
 // TIP: If you like VimGym and want to share the W00t!, I'm grateful for
@@ -32,3 +34,4 @@ Training in the VimGym
 
 `:VimGym` will spawn a new tab and set you off on a challenge. This may be a
 new challenge or a repeat, as determined by VimGym.
+____
