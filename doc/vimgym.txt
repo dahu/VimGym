@@ -1,0 +1,104 @@
+*vimgym.txt*	A place for Deliberate Practice of Vim skills
+
+
+			VIM REFERENCE MANUAL	by Barry Arthur
+
+
+Help on using vimgym                                                    *vimgym*
+
+1. Introduction				|vimgym-intro|
+2. Configuration			|vimgym-configuration|
+3. Other				|vimgym-other|
+
+==============================================================================
+ 1. INTRODUCTION                                                  *vimgym-intro*
+
+NOTE: The all caps header needs a leading space and a tag at the end to be
+highlighted.
+
+Note that tags are usually right aligned.
+
+This is a nice introduction into the magic this wonderfull plugin provides.
+Links are defined by surrounding some text with bars "|", like |help-writing|.
+Use stars "*" to define tags, like this: *awesome-topic*
+
+NOTE: With conceal enabled the link/tag markers are hidden.
+
+==============================================================================
+ 2. CONFIGURATION                                         *vimgym-configuration*
+
+It's good to follow Vim's convention on help tags as described in
+|help-context|. Something like this: *:ExCommand* , *'option'* ,
+*i_CTRL-X_CTRL-K* , etc.
+
+Note: Variables used to modify a plugin behavior are usually surrounded by
+quotes as if they were options.
+
+|'vimgym-option1'|		Does some magic.
+|'vimgym-option2'|		Does some dark magic.
+
+
+------------------------------------------------------------------------------
+                                                              *'vimgym-option1'*
+Values: numeric                                                              ~
+Default: 1                                                                   ~
+
+NOTE: Add a trailing tilde "~" at the end of the line to get that
+highlighting. With conceal enabled the tilde will be hidden.
+
+Detailed description of what this variable modifies.
+
+------------------------------------------------------------------------------
+                                                              *'vimgym-option2'*
+Values: string                                                               ~
+Default: 'abc'                                                               ~
+
+Detailed description of what this variable modifies.
+
+==============================================================================
+ 3. OTHER                                                         *vimgym-other*
+
+A block of indented text can be highlighted by ending the previous line with a
+greater than ">" character. The highlighting will end on a line with a less
+than character "<" as the first non-blank or any unindented line.
+
+Something like this: >
+
+	if a > b
+      echo a
+    else
+      echo b
+    endif
+<
+Note that the less than and greater than chars will hidden when conceal is
+enabled.
+
+The tilde can be used to highlight column headers:
+
+		Header1   Header2   Header3 ~
+		---------------------------
+        item      entry1    entry2
+
+Lines starting with a tab that is followed by an asterisk that is also
+followed by the name of a highlight group will be highlighted using the colors
+for that highlighting group. e.g.:
+
+	*String	needs an actual tab before and after the '*String'
+	*Todo	needs an actual tab before and after the '*Todo'
+	*Error	needs an actual tab before and after the '*Error'
+
+There are some special cases that will be also highlighted:
+- <Anything>	<= Anything enclosed in <>.
+- {Another}	<= Anything enclosed in {}
+- CTRL-X	<= CTRL- followed by any char.
+
+Template From: https://github.com/dahu/Area-41/
+ vim:tw=78:ts=8:ft=help:norl:
+vimgym.txt
+
+:Author: Barry Arthur
+:Email: barry.arthur@gmail.com
+:Date: 2014-04-06 13:44
+
+
+

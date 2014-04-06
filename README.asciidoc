@@ -1,0 +1,34 @@
+VimGym
+------
+
+____
+
+// TIP: If you like VimGym and want to share the W00t!, I'm grateful for
+// https://www.gittip.com/bairuidahu/[tips] or
+// http://of-vim-and-vigor.blogspot.com/[beverages].
+
+The VimGym is your very own, private Vim workout space where you can work on
+your Vim Game, hone your skills and keep your edge. It is based on the
+principles of Deliberate Practice, which:
+
+* is explicitly intended to improve performance
+* concentrates on skills just beyond your level of competence
+* provides feedback on results
+* uses repetition to establish good habits
+
+VimGym maintains a suite of tasks that it challenges you with and records your
+achievemnts on. It compares your current score with your prior scores and your
+Personal Best for each task. VimGym will re-test you more frequently on tasks
+that you achieve lower scores on, thereby forcing you to focus more on your
+weaker areas.
+
+You can add your own challenges to VimGym. Share them with your friends.
+
+VimGym is not meant for contest; as each individual's playing field can differ
+wildly, comparing times is mostly meaningless.
+
+Training in the VimGym
+~~~~~~~~~~~~~~~~~~~~~~
+
+`:VimGym` will spawn a new tab and set you off on a challenge. This may be a
+new challenge or a repeat, as determined by VimGym.
