@@ -38,5 +38,5 @@ Training in the VimGym
 
 From within a VimGym pane, use:
 
-* `:VimGymStart`
-* `:VimGymEnd`
+* `:VGS` -- Call this when you are ready to start the editing task
+* `:VGE` -- Call this when you are finished the task

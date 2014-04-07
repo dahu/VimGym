@@ -67,7 +67,7 @@ endfunction
 
 function! s:find_vimgym_tab()
   for i in range(tabpagenr('$'))
-    if len(filter(tabpagebuflist(i + 1), 'bufname(v:val) =~ "\\.vg[est]"')) > 0
+    if len(filter(tabpagebuflist(i + 1), 'getbufvar(v:val, "vimgym_task") != ""')) > 0
       return i+1
     endif
   endfor
@@ -76,17 +76,19 @@ endfunction
 
 function! s:new_vimgym_tab()
   tabnew
-  split
+  new
   return tabpagenr()
 endfunction
 
 function! s:vimgym_init_commands()
-  command! -bar -buffer -nargs=0 VimGymStart call <SID>vimgym_start()
-  silent! delcommand VimGymEnd
+  command! -bar -buffer -nargs=0 VGS call <SID>vimgym_start()
+  silent! delcommand VGE
 endfunction
 
 function! s:vimgym_start()
-  command! -bar -buffer -nargs=0 VimGymEnd   call <SID>vimgym_end()
+  1 wincmd w
+  setlocal modifiable
+  command! -bar -buffer -nargs=0 VGE       call <SID>vimgym_end()
   let s:start_time = localtime()
 endfunction
 
@@ -117,17 +119,40 @@ function! s:save_task_best(task, time)
   return 0
 endfunction
 
+function! s:message(msg)
+  echohl Warning
+  echom a:msg
+  echohl None
+endfunction
+
+function! s:task_complete()
+  let curwin = winnr()
+  let curpos = getpos('.')
+
+  1 wincmd w
+  let b1 = getline(1, '$')
+  2 wincmd w
+  let b2 = getline(1, '$')
+  exe curwin . ' wincmd w'
+
+  call setpos('.', curpos)
+
+  return b1 == b2
+endfunction
+
 function! s:vimgym_end()
   let task = b:vimgym_task
-  let diff = localtime() - s:start_time
-  let stat = 'Completed task ' . task . ' in ' . diff . ' seconds.'
-  if s:save_task_best(task, diff)
-    let stat .= ' Personal Best Time! \o/'
+  let tdiff = localtime() - s:start_time
+  if s:task_complete()
+    let stat = 'Completed task ' . task . ' in ' . tdiff . ' seconds.'
+    if s:save_task_best(task, tdiff)
+      let stat .= ' Personal Best Time! \o/'
+    endif
+    call s:message(stat)
+    silent! delcommand VGE
+  else
+    call s:message('Task is not complete!')
   endif
-  echohl Warning
-  echom stat
-  echohl None
-  silent! delcommand VimGymEnd
 endfunction
 
 function! s:open_vimgym_tab(task)
@@ -143,26 +168,33 @@ function! s:open_vimgym_tab(task)
 
   " load the specified task and setup the commands
   1 wincmd w
+  setlocal buftype=nofile
+  setlocal modifiable
   %delete
   call setline(1, s:task_read('start', a:task))
+  setlocal nomodifiable
   call s:vimgym_init_commands()
   let b:vimgym_task = a:task
 
   2 wincmd w
+  setlocal buftype=nofile
+  setlocal modifiable
   %delete
   call setline(1, s:task_read('end', a:task))
+  setlocal nomodifiable
   call s:vimgym_init_commands()
   let b:vimgym_task = a:task
 
   1 wincmd w
-  echohl Warning
-  echom "Type :VimGymStart   to begin and   :VimGymEnd   when you're done."
-  echohl None
+  call s:message("Type :VGS   to begin and   :VGE   when you're done.")
 endfunction
 
 function! s:task_read(startend, task)
   let ext = '.vg' . (a:startend == 'start' ? 's' : 'e')
   return readfile(g:vimgym_tasks_dir . '/' . a:task . ext)
+endfunction
+function! TaskRead(se, t)
+  return s:task_read(a:se, a:t)
 endfunction
 
 " only list tasks that have both a .vgs and vge file
@@ -196,7 +228,13 @@ function! s:task_stats(...)
   if a:0
     let task = a:1
   endif
-  echom 'stats task = ' . (task == '' ? 'all' : task)
+  if task != '' && has_key(s:task_times, task)
+    echo 'VimGym task ' . task . ' PB Time is ' . s:task_times[task] . ' seconds.'
+  else
+    echo "VimGym Personal Best Times"
+    echo "SECONDS	TASK"
+    echo join(map(items(s:task_times), 'join(reverse(v:val), "	")'), "\n")
+  endif
 endfunction
 
 function! s:vimgym(action, ...) " {{{1
@@ -241,12 +279,15 @@ function! s:vimgym(action, ...) " {{{1
 endfunction
 
 " Public Interface: {{{1
+call s:load_task_stats()
+
 function! VimGym(...)
   call s:open_vimgym_tab()
 endfunction
 
 " Commands: {{{1
 command! -bar -nargs=* -complete=custom,<SID>command_complete VimGym call <SID>vimgym(<f-args>)
+command! -bar -nargs=* -complete=custom,<SID>command_complete VG call <SID>vimgym(<f-args>)
 
 " Teardown:{{{1
 "reset &cpo back to users setting
