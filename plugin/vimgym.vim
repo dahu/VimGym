@@ -137,7 +137,7 @@ function! s:task_complete()
 
   call setpos('.', curpos)
 
-  return b1 == b2
+  return b1 ==# b2
 endfunction
 
 function! s:vimgym_end()
