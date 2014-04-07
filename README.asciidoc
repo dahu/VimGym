@@ -28,9 +28,6 @@ wildly, comparing times is mostly meaningless.
 Training in the VimGym
 ~~~~~~~~~~~~~~~~~~~~~~
 
-* `:VimGym` -- will spawn a new tab and set you off on a challenge. This may be a
-   new challenge or a repeat, as determined by VimGym.
-
 * `:VimGym do [<task-name>]`
 * `:VimGym add start|end <task-name>`
 * `:VimGym delete <task-name>`
@@ -40,3 +37,11 @@ From within a VimGym pane, use:
 
 * `:VGS` -- Call this when you are ready to start the editing task
 * `:VGE` -- Call this when you are finished the task
+
+
+As Yet Unimplemented
+~~~~~~~~~~~~~~~~~~~~
+
+* `:VimGym` -- will spawn a new tab and set you off on a challenge. This may be a
+   new challenge or a repeat, as determined by VimGym.
+
