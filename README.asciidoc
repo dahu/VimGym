@@ -37,6 +37,7 @@ From within a VimGym pane, use:
 
 * `:VGS` -- Call this when you are ready to start the editing task
 * `:VGE` -- Call this when you are finished the task
+* `:VGD` -- Toggle between normal view and diff view
 
 
 As Yet Unimplemented

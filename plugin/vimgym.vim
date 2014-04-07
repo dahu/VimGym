@@ -82,13 +82,33 @@ endfunction
 
 function! s:vimgym_init_commands()
   command! -bar -buffer -nargs=0 VGS call <SID>vimgym_start()
+  command! -bar         -nargs=0 VGD call <SID>vimgym_diff_toggle()
   silent! delcommand VGE
+endfunction
+
+function! s:vimgym_diff_toggle()
+  let curwin = winnr()
+  let curpos = getpos('.')
+
+  1 wincmd w
+  if &diff
+    diffoff
+    2 wincmd w
+    diffoff
+  else
+    diffthis
+    2 wincmd w
+    diffthis
+  endif
+
+  exe curwin . ' wincmd w'
+  call setpos('.', curpos)
 endfunction
 
 function! s:vimgym_start()
   1 wincmd w
   setlocal modifiable
-  command! -bar -buffer -nargs=0 VGE       call <SID>vimgym_end()
+  command! -bar -buffer -nargs=0 VGE call <SID>vimgym_end()
   let s:start_time = localtime()
 endfunction
 
@@ -150,6 +170,7 @@ function! s:vimgym_end()
     endif
     call s:message(stat)
     silent! delcommand VGE
+    silent! delcommand VGD
   else
     call s:message('Task is not complete!')
   endif
