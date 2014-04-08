@@ -33,6 +33,13 @@ Training in the VimGym
 * `:VimGym delete <task-name>`
 * `:VimGym stats [<task-name>]`
 
+`:VimGym add` is for managing your suite of tasks -- the idea being,
+when in the middle of editing you become aware of something you should
+practice later, you can yank the necessary lines and paste them into a
+new buffer and `:VimGym add start <taskname>` the _from_ half of the
+pair and then alter it to the desired form and run `:VimGym add end
+<taskname>`.
+
 From within a VimGym pane, use:
 
 * `:VGS` -- Call this when you are ready to start the editing task

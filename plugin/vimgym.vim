@@ -141,7 +141,7 @@ endfunction
 
 function! s:message(msg)
   echohl Warning
-  echom a:msg
+  echon a:msg
   echohl None
 endfunction
 
@@ -218,6 +218,11 @@ function! TaskRead(se, t)
   return s:task_read(a:se, a:t)
 endfunction
 
+function! s:task_list_all()
+  return map(split(globpath(g:vimgym_tasks_dir, '*.vg[es]'), "\n"),
+        \ 'fnamemodify(v:val, ":t")')
+endfunction
+
 " only list tasks that have both a .vgs and vge file
 function! s:task_list()
   return map(filter(split(globpath(g:vimgym_tasks_dir, '*.vgs'), "\n"),
@@ -227,21 +232,37 @@ endfunction
 
 function! s:task_do(task)
   let task = a:task
-  echom 'do task = ' . task
   if index(s:task_list(), task) == -1
     echom 'Task not found: ' . task
   else
-
     call s:open_vimgym_tab(task)
   endif
 endfunction
 
 function! s:task_add(startend, task)
-  echom 'add task = ' . a:startend . ' - ' . a:task
+  let task = a:task
+  if a:startend == 'start'
+    let ext = '.vgs'
+    let alt = '.vge'
+    let opp = 'end'
+  else
+    let ext = '.vge'
+    let alt = '.vgs'
+    let opp = 'start'
+  endif
+  if (index(s:task_list_all(), task . ext) != -1)
+        \ && (input('Warning: Task "' . task . '" already exists. Overwrite? ') !~? '^y\%[es]$')
+    call s:message('NOT overwriting task "' . task . '"')
+    return
+  endif
+  call writefile(getline(1,'$'), g:vimgym_tasks_dir . '/' . task . ext)
+  if !filereadable(g:vimgym_tasks_dir . '/' . task . alt)
+    call s:message('Note: You still have to create the matching ' . opp . ' task.')
+  endif
 endfunction
 
 function! s:task_delete(task)
-  echom 'delete task = ' . a:task
+  echom 'STILL UNIMPLEMENTED: delete task = ' . a:task
 endfunction
 
 function! s:task_stats(...)
