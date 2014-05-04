@@ -15,7 +15,7 @@ principles of Deliberate Practice, which:
 * uses repetition to establish good habits
 
 VimGym maintains a suite of tasks that it challenges you with and records your
-achievemnts on. It compares your current score with your prior scores and your
+achievements on. It compares your current score with your prior scores and your
 Personal Best for each task. VimGym will re-test you more frequently on tasks
 that you achieve lower scores on, thereby forcing you to focus more on your
 weaker areas.
