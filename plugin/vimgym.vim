@@ -106,6 +106,9 @@ function! s:vimgym_diff_toggle()
 endfunction
 
 function! s:vimgym_start()
+  if exists(':VGE')
+    return
+  endif
   1 wincmd w
   setlocal modifiable
   command! -bar -buffer -nargs=0 VGE call <SID>vimgym_end()
